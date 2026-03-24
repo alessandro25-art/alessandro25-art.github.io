@@ -45,9 +45,11 @@ Do NOT use: "passionate about", "driven professional", "merit scholarship recipi
   - Click on card image or "Read more" expands card detail
   - Click snaps card to center of carousel via scrollTo
 - Skills: flex-wrap badges with inline detail panel, wave animation on click
-- QR: points to https://alessandro25-art.github.io, label shows "AlessandroPortfolio.com"
+  - Hint text "(Touch to know more)" as separate `<p>` below the label (NOT inside the span — gets clipped on mobile)
+- QR: points to https://alessandro25-art.github.io, label "Scan to open this page"
 - Footer: "Alessandro Demichelis · 2026"
-- Easter egg: small text below footer "Thank you for scrolling all the way here!"
+- Copyright notice: small `<p>` between footer and easter egg — portfolio review only, no redistribution
+- Easter egg: small text at very bottom "Thank you for scrolling all the way here!"
 
 ## Sections order
 Nav → Hero (name + CV) → Selected Work → Skills → QR → Footer
@@ -59,7 +61,7 @@ Nav → Hero (name + CV) → Selected Work → Skills → QR → Footer
 4. Exon, Circular Business Model Design — printer ecosystem, 5 business model patterns
 
 Each card: thumb image (Pexels), tags, title, short description, "Read more" toggle, PDF link.
-PDF links use `download` attribute with clean filename matching the work title.
+PDF links open in new tab (`target="_blank"`) — NO `download` attribute (opens in browser, not forced download).
 
 ## Ralph loop
 Usage: `CLAUDE_PATH="/c/Users/aless/AppData/Local/Packages/Claude_pzs8sxrjxfjjc/LocalCache/Roaming/Claude/claude-code/2.1.78" PATH="$CLAUDE_PATH:$PATH" bash scripts/ralph/ralph.sh --tool claude`
