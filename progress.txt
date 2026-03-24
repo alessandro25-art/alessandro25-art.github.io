@@ -44,6 +44,14 @@
   - Must query cards AFTER cloning so `querySelectorAll('.card')` returns all cards (originals + clones); `length / 2` indexes the first clone
 ---
 
+## US-001 (Fix: hero-right vertical alignment on desktop)
+- Changed `align-items: flex-start` to `align-items: stretch` in `.section-hero` CSS rule
+- Files changed: index.html
+- Learnings:
+  - `align-items: stretch` makes both flex children share the parent's height, allowing `justify-content: center` on `.hero-right` to actually center its content vertically
+  - Mobile @media block was not modified
+---
+
 ## US-002 (Fix: clicking a card should snap it to center of the carousel viewport)
 - Replaced `card.scrollIntoView(...)` with `workCarousel.scrollTo({ left: target, behavior: 'smooth' })` where `target = card.offsetLeft - workCarousel.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2)`
 - Files changed: index.html

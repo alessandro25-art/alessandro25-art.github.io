@@ -1,6 +1,6 @@
 {
   "project": "Portfolio",
-  "description": "Fix hero-right vertical alignment on desktop",
+  "description": "Fix Ferri and Exon card logo display",
   "userStories": [
     {
       "id": "US-001",
@@ -11,8 +11,22 @@
         "No other CSS or HTML is changed",
         "The mobile @media (max-width: 600px) block is not modified"
       ],
-      "priority": 1,
+      "priority": 2,
       "passes": true
+    },
+    {
+      "id": "US-002",
+      "title": "Fix: Ferri and Exon card logos are cropped — use object-fit contain",
+      "description": "The Ferri and Exon cards use logo images (./Immagini/Ferri.png and ./Immagini/Exon.png) but the global .card-thumb img CSS uses object-fit: cover which crops them. They need object-fit: contain so the full logo is visible, with padding for breathing room. Background colors should match the logo backgrounds: Ferri is blue (#1a7ac9), Exon is gold (#e8a800). The fix mirrors how the ILLY card is done: that img tag has style='object-fit: contain; padding: 20px;' inline.",
+      "acceptanceCriteria": [
+        "Ferri card img tag has inline style: object-fit: contain; padding: 20px;",
+        "Exon card img tag has inline style: object-fit: contain; padding: 20px;",
+        "Ferri card-thumb background remains #1a7ac9",
+        "Exon card-thumb background remains #e8a800",
+        "No other cards or CSS rules are changed"
+      ],
+      "priority": 1,
+      "passes": false
     }
   ]
 }
