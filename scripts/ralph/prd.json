@@ -25,7 +25,7 @@
         "The variable `carousel` is not in scope in the first script block — use `workCarousel` which IS in scope there"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Root cause: scrollIntoView() acts on the nearest scrollable ancestor UP the DOM, which on mobile/desktop can be the page itself rather than the carousel. Manual carousel.scrollTo() with computed offsetLeft is reliable."
     }
   ]

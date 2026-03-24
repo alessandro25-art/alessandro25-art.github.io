@@ -43,3 +43,11 @@
   - `scrollWidth / 2` is inaccurate because scrollWidth includes padding on both ends; the first clone's `offsetLeft` is the exact pixel where the second set starts
   - Must query cards AFTER cloning so `querySelectorAll('.card')` returns all cards (originals + clones); `length / 2` indexes the first clone
 ---
+
+## US-002 (Fix: clicking a card should snap it to center of the carousel viewport)
+- Replaced `card.scrollIntoView(...)` with `workCarousel.scrollTo({ left: target, behavior: 'smooth' })` where `target = card.offsetLeft - workCarousel.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2)`
+- Files changed: index.html
+- Learnings:
+  - `scrollIntoView` scrolls the nearest scrollable ancestor which can be the page, not the carousel — manual `scrollTo` on the container is reliable
+  - In script block 1, use `workCarousel` (in scope) not `carousel` (only in scope in script block 2)
+---
