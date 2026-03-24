@@ -212,7 +212,6 @@
       display: flex;
       overflow-x: auto;
       gap: var(--space-md);
-      scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       margin-left: calc(50% - 50vw);
@@ -873,6 +872,40 @@
         }
       });
     });
+  </script>
+
+  <script>
+    (function () {
+      var carousel = document.querySelector('.work-carousel');
+      if (!carousel) return;
+
+      // Clone all cards for seamless loop
+      var origCards = Array.from(carousel.querySelectorAll('.card'));
+      origCards.forEach(function (card) {
+        carousel.appendChild(card.cloneNode(true));
+      });
+
+      var halfWidth = carousel.scrollWidth / 2;
+      var paused = false;
+      var rafId = null;
+
+      function step() {
+        if (!paused) {
+          carousel.scrollLeft += 0.6;
+          if (carousel.scrollLeft >= halfWidth) {
+            carousel.scrollLeft -= halfWidth;
+          }
+        }
+        rafId = requestAnimationFrame(step);
+      }
+
+      rafId = requestAnimationFrame(step);
+
+      carousel.addEventListener('mouseenter', function () { paused = true; });
+      carousel.addEventListener('mouseleave', function () { paused = false; });
+      carousel.addEventListener('touchstart', function () { paused = true; }, { passive: true });
+      carousel.addEventListener('touchend', function () { paused = false; }, { passive: true });
+    })();
   </script>
 
 </body>

@@ -10,6 +10,13 @@ Started: 2026-03-24
   - `height: 100%` on an img inside an aspect-ratio container is unreliable; `position: absolute; inset: 0` is the correct cross-browser fix
 ---
 
+## US-001
+- Changed `.card` flex basis from 440px to 616px (40% increase)
+- Files changed: index.html
+- Learnings:
+  - Simple single-property CSS change; no side effects on layout since cards are inside a flex carousel
+---
+
 ## Codebase Patterns
 - index.html is self-contained: all CSS in <style> block, all JS before </body>
 - Use Edit tool only — never Write the whole file (too large, too much context loss)

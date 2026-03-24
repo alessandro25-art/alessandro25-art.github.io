@@ -12,7 +12,7 @@
         "No other changes needed"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "440 * 1.4 = 616px"
     },
     {
