@@ -1,0 +1,15 @@
+## US-001 (Pausa carousel quando si apre un Read more)
+- Added `window.cardOpen` boolean shared between the card-toggle script and the carousel IIFE
+- Card toggle sets `window.cardOpen = true` on expand, `false` on collapse
+- Carousel RAF loop checks `!window.cardOpen` in addition to `!paused`
+- Files changed: index.html
+- Learnings:
+  - Card toggle and carousel are in separate `<script>` blocks — local variables aren't shared; use `window.*` for cross-script state
+---
+
+## US-001 (Rallenta il carousel del 30%)
+- Changed carousel scroll speed from 0.6 to 0.42 (30% reduction)
+- Files changed: index.html
+- Learnings:
+  - Single numeric constant in the RAF step function controls speed
+---

@@ -12,7 +12,7 @@
         "Change it to 0.42 (0.6 * 0.7 = 30% slower)"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Single number change in the carousel RAF JS block. 0.6 → 0.42."
     }
   ]
