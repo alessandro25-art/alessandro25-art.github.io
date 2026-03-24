@@ -1,22 +1,32 @@
 {
   "project": "Portfolio",
-  "branchName": "ralph/portfolio-fixes",
-  "description": "Fix carousel cloni senza event listener + sync stato",
+  "description": "Fix infinite carousel loop + card snap-to-center",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Fix: cloni del carousel non rispondono ai click",
-      "description": "As a visitor, clicking on a cloned card should open Read more and pause the carousel, exactly like the originals.",
+      "title": "Fix: infinite carousel loop stops at the end instead of looping",
+      "description": "As a visitor, the carousel should loop forever without stopping.",
       "acceptanceCriteria": [
-        "Replace the per-element card-toggle listeners (document.querySelectorAll('.card-toggle').forEach) with event delegation on the carousel element itself",
-        "Replace the per-element card-thumb listeners with event delegation on the carousel element",
-        "When a card-toggle is clicked (open or close), also sync the twin card: find all cards in the carousel, get the clicked card's index, compute twinIndex = index < origCount ? index + origCount : index - origCount, and apply the same open/close state to the twin card silently (without re-triggering events)",
-        "window.cardOpen is set to true when ANY card opens, false only when ALL cards are closed (check if any card-toggle has aria-expanded=true after the action)",
-        "Remove the separate card-thumb click block — handle thumb clicks via delegation on carousel too"
+        "In the carousel script block (second <script> tag), replace `var halfWidth = carousel.scrollWidth / 2;` with: `var origCards2 = carousel.querySelectorAll('.card'); var loopWidth = origCards2[origCards2.length / 2].offsetLeft;` — this measures the offsetLeft of the FIRST CLONE card (index origCount), which is the exact pixel width of one full set including gaps and leading padding",
+        "Replace the reset check `if (carousel.scrollLeft >= halfWidth) { carousel.scrollLeft -= halfWidth; }` with `if (carousel.scrollLeft >= loopWidth) { carousel.scrollLeft -= loopWidth; }`",
+        "Remove the now-unused `halfWidth` variable"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "Root cause: cloning (line ~918, script block 2) happens AFTER event listeners are attached (script block 1, lines 872-907). Delegation fixes this because the listener is on the carousel container which exists before cloning. origCount = 4 (the original 4 cards). The twin sync must update: hidden attr, is-open class, aria-expanded, button text and arrow — but NOT trigger click() to avoid infinite loop."
+      "passes": false,
+      "notes": "Root cause: scrollWidth / 2 includes padding-right once and padding-left once, so halfWidth != one set width. The first clone's offsetLeft is the exact point where the second set starts, making it the correct reset threshold."
+    },
+    {
+      "id": "US-002",
+      "title": "Fix: clicking a card should snap it to center of the carousel viewport",
+      "description": "As a visitor, when I click a card image or 'Read more', the carousel should smooth-scroll so that card is horizontally centered in view.",
+      "acceptanceCriteria": [
+        "In the card click handler (first <script> tag), replace the setTimeout with scrollIntoView with: `setTimeout(function () { var target = card.offsetLeft - carousel.offsetLeft - (carousel.clientWidth / 2 - card.offsetWidth / 2); carousel.scrollTo({ left: target, behavior: 'smooth' }); }, 40);`",
+        "The scrollTo must operate on the `workCarousel` element (the overflow container), NOT call scrollIntoView on the card element — scrollIntoView scrolls the page, not the carousel",
+        "The variable `carousel` is not in scope in the first script block — use `workCarousel` which IS in scope there"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Root cause: scrollIntoView() acts on the nearest scrollable ancestor UP the DOM, which on mobile/desktop can be the page itself rather than the carousel. Manual carousel.scrollTo() with computed offsetLeft is reliable."
     }
   ]
 }

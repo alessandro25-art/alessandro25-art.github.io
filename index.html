@@ -938,7 +938,8 @@
         carousel.appendChild(card.cloneNode(true));
       });
 
-      var halfWidth = carousel.scrollWidth / 2;
+      var origCards2 = carousel.querySelectorAll('.card');
+      var loopWidth = origCards2[origCards2.length / 2].offsetLeft;
       var paused = false;
       window.cardOpen = false;
       var rafId = null;
@@ -946,8 +947,8 @@
       function step() {
         if (!paused && !window.cardOpen) {
           carousel.scrollLeft += 0.21;
-          if (carousel.scrollLeft >= halfWidth) {
-            carousel.scrollLeft -= halfWidth;
+          if (carousel.scrollLeft >= loopWidth) {
+            carousel.scrollLeft -= loopWidth;
           }
         }
         rafId = requestAnimationFrame(step);
