@@ -1,29 +1,18 @@
 {
   "project": "Portfolio",
-  "description": "Fix infinite carousel loop via CSS transform animation",
+  "description": "Fix hero-right vertical alignment on desktop",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Fix: carousel loop using CSS transform animation on inner track div",
-      "description": "The current RAF+scrollLeft approach stops because scrollLeft is browser-clamped to scrollWidth-clientWidth. Replace it with a CSS @keyframes animation on a new .work-carousel-track inner div using translateX(-50%). With 8 cards (4 originals + 4 clones), -50% of the track width = exactly 4 cards + 3.5 gaps — but the padding-left offsets this so card[4] at -50% is at the same viewport position as card[0] at 0. The animation loops seamlessly and is never clamped.",
+      "title": "Fix: hero-right vertical alignment on desktop",
+      "description": "On desktop the right column (.hero-right) is only as tall as its content, so justify-content:center has no effect. The fix is to change align-items on .section-hero from flex-start to stretch so both columns share the same height. The mobile override (flex-direction:column at max-width:600px) must remain untouched.",
       "acceptanceCriteria": [
-        "HTML: wrap the 8 <article class=\"card\"> elements (all cards currently in .work-carousel) inside a new <div class=\"work-carousel-track\"> child. The structure becomes: <div class=\"work-carousel\"><div class=\"work-carousel-track\">...cards...</div></div>",
-        "CSS .work-carousel: change `overflow-x: auto` to `overflow: hidden`. Remove `display: flex`, `gap: var(--space-md)`, `padding-left: var(--space-md)`, `padding-right: var(--space-md)`, `-webkit-overflow-scrolling: touch`, `scrollbar-width: none` from .work-carousel (they move to .work-carousel-track). Keep `margin-left: calc(50% - 50vw)` and `width: 100vw`.",
-        "CSS: remove the `.work-carousel::-webkit-scrollbar { display: none; }` rule entirely.",
-        "CSS .work-carousel-track: add new rule: `.work-carousel-track { display: flex; gap: var(--space-md); padding-left: var(--space-md); will-change: transform; animation: carousel-scroll 60s linear infinite; animation-play-state: running; }`",
-        "CSS: add keyframe: `@keyframes carousel-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`",
-        "JS (second script block, the carousel IIFE): replace `var carousel = document.querySelector('.work-carousel');` with `var carousel = document.querySelector('.work-carousel'); var track = carousel ? carousel.querySelector('.work-carousel-track') : null;` then check `if (!track) return;`",
-        "JS (second script block): clone cards into the TRACK, not the carousel: `var origCards = Array.from(track.querySelectorAll('.card')); origCards.forEach(function(card){ track.appendChild(card.cloneNode(true)); });`",
-        "JS (second script block): delete entirely: the `beforeWidth`, `loopWidth`, `paused`, `rafId` variables; the `step()` function; the `requestAnimationFrame(step)` call; the `setTimeout` bump animation block.",
-        "JS (second script block): add hover/touch listeners on `carousel` (not track) to pause/resume animation on the track: `carousel.addEventListener('mouseenter', function(){ track.style.animationPlayState = 'paused'; }); carousel.addEventListener('mouseleave', function(){ if (!window.cardOpen) track.style.animationPlayState = 'running'; }); carousel.addEventListener('touchstart', function(){ track.style.animationPlayState = 'paused'; }, {passive:true}); carousel.addEventListener('touchend', function(){ if (!window.cardOpen) track.style.animationPlayState = 'running'; }, {passive:true});`",
-        "JS (first script block, card click handler): after setting `window.cardOpen`, also update the track: add `var t = document.querySelector('.work-carousel-track'); if (t) t.style.animationPlayState = window.cardOpen ? 'paused' : 'running';` right after the line that sets `window.cardOpen`",
-        "JS (first script block): change `var workCarousel = document.querySelector('.work-carousel');` delegation — keep delegation on workCarousel (clicks bubble from cards through track to carousel, so delegation still works). No change needed to delegation target.",
-        "JS (first script block): the snap-to-center setTimeout must target the TRACK's scroll container. Since the carousel is now overflow:hidden (not scrollable), remove the snap-to-center setTimeout block entirely (the line `card.scrollIntoView(...)` or `workCarousel.scrollTo(...)`) — snapping doesn't apply to a CSS-animated track.",
-        "JS (first script block): in the twin card sync, `allCards` is now `Array.from(workCarousel.querySelectorAll('.card'))` — this still works because querySelectorAll searches descendants including inside .work-carousel-track."
+        "In .section-hero CSS rule, change `align-items: flex-start` to `align-items: stretch`",
+        "No other CSS or HTML is changed",
+        "The mobile @media (max-width: 600px) block is not modified"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": "Root cause: scrollLeft is clamped by browser at max = scrollWidth - clientWidth. If loopWidth > max, reset never fires. CSS animation translateX has no such constraint. The -50% works: track width = padding-left + 8*cardWidth + 7*gap. 50% of that = (padding-left + 8*cardWidth + 7*gap)/2. Card[4].offsetLeft = padding-left + 4*cardWidth + 4*gap. At translateX(-50%): card[4] viewport position = card[4].offsetLeft - 50%*trackWidth = padding-left + 4*(cardWidth+gap) - (padding-left/2 + 4*cardWidth + 3.5*gap) = padding-left/2 + 0.5*gap ≈ 32. Card[0] at translateX(0) is at padding-left = 32. Close enough — the loop looks seamless. origCount for twin sync = allCards.length / 2 still valid."
+      "passes": false
     }
   ]
 }
