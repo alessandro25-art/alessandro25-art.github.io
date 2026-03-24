@@ -52,6 +52,13 @@
   - Mobile @media block was not modified
 ---
 
+## US-002 (Fix: Ferri and Exon card logos are cropped — use object-fit contain)
+- Added `style="object-fit: contain; padding: 20px;"` inline to Ferri.png and Exon.png img tags
+- Files changed: index.html
+- Learnings:
+  - Inline style on the img tag (matching the ILLY card pattern) overrides the global `.card-thumb img` rule without touching any other cards
+---
+
 ## US-002 (Fix: clicking a card should snap it to center of the carousel viewport)
 - Replaced `card.scrollIntoView(...)` with `workCarousel.scrollTo({ left: target, behavior: 'smooth' })` where `target = card.offsetLeft - workCarousel.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2)`
 - Files changed: index.html
