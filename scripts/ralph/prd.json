@@ -12,7 +12,7 @@
         "The mobile @media (max-width: 600px) block is not modified"
       ],
       "priority": 1,
-      "passes": false
+      "passes": true
     }
   ]
 }
