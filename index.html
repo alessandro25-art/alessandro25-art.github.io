@@ -935,12 +935,11 @@
 
       // Clone all cards for seamless loop
       var origCards = Array.from(carousel.querySelectorAll('.card'));
+      var beforeWidth = carousel.scrollWidth;
       origCards.forEach(function (card) {
         carousel.appendChild(card.cloneNode(true));
       });
-
-      var origCards2 = carousel.querySelectorAll('.card');
-      var loopWidth = origCards2[origCards2.length / 2].offsetLeft;
+      var loopWidth = carousel.scrollWidth - beforeWidth;
       var paused = false;
       window.cardOpen = false;
       var rafId = null;
