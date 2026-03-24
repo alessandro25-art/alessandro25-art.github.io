@@ -858,11 +858,13 @@
           btn.setAttribute('aria-expanded', 'true');
           btn.childNodes[0].textContent = 'Read less ';
           btn.querySelector('.toggle-arrow').innerHTML = '&uarr;';
+          window.cardOpen = true;
         } else {
           panel.classList.remove('is-open');
           btn.setAttribute('aria-expanded', 'false');
           btn.childNodes[0].textContent = 'Read more ';
           btn.querySelector('.toggle-arrow').innerHTML = '&darr;';
+          window.cardOpen = false;
           panel.addEventListener('transitionend', function handler() {
             if (!panel.classList.contains('is-open')) {
               panel.setAttribute('hidden', '');
@@ -887,10 +889,11 @@
 
       var halfWidth = carousel.scrollWidth / 2;
       var paused = false;
+      window.cardOpen = false;
       var rafId = null;
 
       function step() {
-        if (!paused) {
+        if (!paused && !window.cardOpen) {
           carousel.scrollLeft += 0.6;
           if (carousel.scrollLeft >= halfWidth) {
             carousel.scrollLeft -= halfWidth;

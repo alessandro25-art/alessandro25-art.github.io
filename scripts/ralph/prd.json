@@ -1,35 +1,19 @@
 {
   "project": "Portfolio",
   "branchName": "ralph/portfolio-fixes",
-  "description": "Carousel infinite scroll e card più grandi",
+  "description": "Carousel speed reduction",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Aumenta le card del 40%",
-      "description": "As a visitor, I want larger project cards so the images are more impactful.",
+      "title": "Rallenta il carousel del 30%",
+      "description": "As a visitor, I want the carousel to scroll more slowly.",
       "acceptanceCriteria": [
-        "Change `flex: 0 0 440px` to `flex: 0 0 616px` in the .card CSS rule",
-        "No other changes needed"
+        "Find the carousel scroll speed variable (currently 0.6 px/frame) in the JS",
+        "Change it to 0.42 (0.6 * 0.7 = 30% slower)"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "440 * 1.4 = 616px"
-    },
-    {
-      "id": "US-002",
-      "title": "Carousel infinito con auto-scroll",
-      "description": "As a visitor, I want the work carousel to scroll automatically and loop forever.",
-      "acceptanceCriteria": [
-        "Remove `scroll-snap-type: x mandatory` from .work-carousel",
-        "Add JS that clones all .card elements and appends them to .work-carousel (creates seamless loop)",
-        "Add JS requestAnimationFrame loop that increments carousel.scrollLeft by 0.6 each frame",
-        "When carousel.scrollLeft >= half of carousel.scrollWidth, reset to carousel.scrollLeft -= halfWidth",
-        "Pause auto-scroll on mouseenter, resume on mouseleave",
-        "Pause on touchstart, resume on touchend"
-      ],
-      "priority": 2,
-      "passes": true,
-      "notes": "Clone cards first so the second set is identical. Remove scroll-snap to avoid fighting with programmatic scroll. The JS block goes right before </body>, after existing scripts."
+      "passes": false,
+      "notes": "Single number change in the carousel RAF JS block. 0.6 → 0.42."
     }
   ]
 }
