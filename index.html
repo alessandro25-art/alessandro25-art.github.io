@@ -550,6 +550,7 @@
       .meta-sep { display: none; }
       .section-qr { align-items: center; }
       .qr-label { text-align: center; }
+      .card { flex: 0 0 75vw; }
     }
   </style>
 </head>
@@ -947,7 +948,15 @@
         rafId = requestAnimationFrame(step);
       }
 
-      rafId = requestAnimationFrame(step);
+      setTimeout(function () {
+        carousel.scrollTo({ left: 100, behavior: 'smooth' });
+        setTimeout(function () {
+          carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          setTimeout(function () {
+            rafId = requestAnimationFrame(step);
+          }, 700);
+        }, 600);
+      }, 700);
 
       carousel.addEventListener('mouseenter', function () { paused = true; });
       carousel.addEventListener('mouseleave', function () { paused = false; });
