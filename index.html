@@ -784,15 +784,13 @@
 
   <script>
     // ─── QR CODE ─────────────────────────────────────────────
-    window.addEventListener('DOMContentLoaded', function() {
-      new QRCode(document.getElementById('qrcode'), {
-        text: 'https://alessandro25-art.github.io',
-        width: 104,
-        height: 104,
-        colorDark: '#111111',
-        colorLight: '#FFFFFF',
-        correctLevel: QRCode.CorrectLevel.M
-      });
+    new QRCode(document.getElementById('qrcode'), {
+      text: 'https://alessandro25-art.github.io',
+      width: 104,
+      height: 104,
+      colorDark: '#111111',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.M
     });
 
     // ─── SCROLL REVEAL ───────────────────────────────────────
