@@ -1,19 +1,21 @@
 {
   "project": "Portfolio",
   "branchName": "ralph/portfolio-fixes",
-  "description": "Carousel speed reduction",
+  "description": "Carousel pause on card expand",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Rallenta il carousel del 30%",
-      "description": "As a visitor, I want the carousel to scroll more slowly.",
+      "title": "Pausa carousel quando si apre un Read more",
+      "description": "As a visitor, when I click Read more on a card the carousel should stop; when I click Read less it should resume.",
       "acceptanceCriteria": [
-        "Find the carousel scroll speed variable (currently 0.6 px/frame) in the JS",
-        "Change it to 0.42 (0.6 * 0.7 = 30% slower)"
+        "Declare a shared boolean `cardOpen = false` near the existing `paused` variable in the carousel JS block",
+        "In the RAF loop condition, stop scrolling if `paused || cardOpen` is true",
+        "In the card expand/collapse JS block, when opening (expanded === false): set `cardOpen = true`",
+        "When closing (expanded === true): set `cardOpen = false`"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "Single number change in the carousel RAF JS block. 0.6 → 0.42."
+      "notes": "The carousel RAF JS and the card toggle JS are separate blocks in index.html. The `cardOpen` variable must be declared in the carousel block (before the RAF function) so both blocks can access it — or declare it at the top level outside both blocks. Use `var cardOpen = false` so it is function-scoped to the script tag."
     }
   ]
 }
