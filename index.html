@@ -157,6 +157,25 @@
       padding-top: var(--space-xl);
       padding-bottom: var(--space-xl);
       border-bottom: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--space-xxl);
+      align-items: flex-start;
+    }
+
+    .hero-left { flex: 1; }
+
+    .hero-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      padding-top: 6px;
+    }
+
+    .hero-right .section-label {
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: var(--color-text);
     }
 
     .hero-name {
@@ -426,12 +445,6 @@
     }
 
     /* ─── CV ─────────────────────────────────────────────── */
-    .section-cv {
-      padding-top: var(--space-xxl);
-      padding-bottom: var(--space-xxl);
-      border-bottom: 1px solid var(--color-border);
-    }
-
     .cv-note {
       font-size: 0.82rem;
       font-weight: 300;
@@ -513,12 +526,18 @@
 
     /* ─── MOBILE ─────────────────────────────────────────── */
     @media (max-width: 600px) {
+      .section-hero {
+        flex-direction: column;
+      }
+      .hero-right {
+        flex: unset;
+        width: 100%;
+      }
       .hero-name {
         font-size: clamp(36px, 10vw, 56px);
       }
       .section-work,
       .section-skills,
-      .section-cv,
       .section-qr {
         padding-top: var(--space-xl);
         padding-bottom: var(--space-xl);
@@ -547,19 +566,32 @@
 
     <!-- HERO -->
     <section class="section-hero reveal">
-      <h1 class="hero-name">Alessandro<br>Demichelis</h1>
-      <p class="hero-title">Sustainability &amp; ESG</p>
-      <p class="hero-bio">
-        Two masters in sustainability: one at POLIMI Graduate School of Management,
-        one at the University of Ferrara. I work on ESG analysis, sustainable operations,
-        and green finance. Some hands-on research and public sector experience along the way.
-      </p>
-      <div class="hero-meta">
-        <span>Milan, Italy</span>
-        <span class="meta-sep">&middot;</span>
-        <a href="mailto:Alessandro.demichelis@gsom.polimi.it">Alessandro.demichelis@gsom.polimi.it</a>
-        <span class="meta-sep">&middot;</span>
-        <span>IT &middot; EN &middot; ES</span>
+      <div class="hero-left">
+        <h1 class="hero-name">Alessandro<br>Demichelis</h1>
+        <p class="hero-title">Sustainability &amp; ESG</p>
+        <p class="hero-bio">
+          Two masters in sustainability: one at POLIMI Graduate School of Management,
+          one at the University of Ferrara. I work on ESG analysis, sustainable operations,
+          and green finance. Some hands-on research and public sector experience along the way.
+        </p>
+        <div class="hero-meta">
+          <span>Milan, Italy</span>
+          <span class="meta-sep">&middot;</span>
+          <a href="mailto:Alessandro.demichelis@gsom.polimi.it">Alessandro.demichelis@gsom.polimi.it</a>
+          <span class="meta-sep">&middot;</span>
+          <span>IT &middot; EN &middot; ES</span>
+          <span class="meta-sep">&middot;</span>
+          <a href="https://www.linkedin.com/in/alessandro-demichelis-18b17a238" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <span class="section-label">Curriculum Vitae</span>
+        <p class="cv-note">
+          Research intern in green energy markets (University of Ferrara, 2025).
+          Technical intern on PNRR planning at the Comune di Reggio Calabria (2022).
+          Fluent in Italian, English, and Spanish.
+        </p>
+        <a class="btn-cv" href="./CV/CV_Alessandro_Demichelis_26.pdf" download>Download CV &darr;</a>
       </div>
     </section>
 
@@ -732,16 +764,6 @@
     </section>
 
     <!-- CV -->
-    <section class="section-cv reveal">
-      <span class="section-label">Curriculum Vitae</span>
-      <p class="cv-note">
-        Research intern in green energy markets (University of Ferrara, 2025).
-        Technical intern on PNRR planning at the Comune di Reggio Calabria (2022).
-        Fluent in Italian, English, and Spanish.
-      </p>
-      <a class="btn-cv" href="./CV/CV_Alessandro_Demichelis_26.pdf" download>Download CV &darr;</a>
-    </section>
-
     <!-- QR -->
     <section class="section-qr reveal">
       <span class="section-label">Share this page</span>
@@ -846,43 +868,59 @@
       activeSkill = null;
     });
 
-    // ─── CARD EXPAND / COLLAPSE ──────────────────────────────
-    document.querySelectorAll('.card-toggle').forEach(function(btn) {
-      btn.addEventListener('click', function() {
+    // ─── CARD EXPAND / COLLAPSE + THUMB (delegated on carousel) ─
+    var workCarousel = document.querySelector('.work-carousel');
+    if (workCarousel) {
+      workCarousel.addEventListener('click', function(e) {
+        var btn = e.target.closest('.card-toggle');
+        if (!btn) {
+          var thumb = e.target.closest('.card-thumb');
+          if (thumb) btn = thumb.closest('.card').querySelector('.card-toggle');
+        }
+        if (!btn) return;
+
+        var allCards = Array.from(workCarousel.querySelectorAll('.card'));
+        var origCount = allCards.length / 2;
+        var card = btn.closest('.card');
+        var cardIndex = allCards.indexOf(card);
+        var twinIndex = cardIndex < origCount ? cardIndex + origCount : cardIndex - origCount;
+        var twinCard = allCards[twinIndex] || null;
+
         var expanded = btn.getAttribute('aria-expanded') === 'true';
         var panel = btn.nextElementSibling;
 
-        if (!expanded) {
-          panel.removeAttribute('hidden');
-          void panel.offsetHeight; // force reflow
-          panel.classList.add('is-open');
-          btn.setAttribute('aria-expanded', 'true');
-          btn.childNodes[0].textContent = 'Read less ';
-          btn.querySelector('.toggle-arrow').innerHTML = '&uarr;';
-          window.cardOpen = true;
-        } else {
-          panel.classList.remove('is-open');
-          btn.setAttribute('aria-expanded', 'false');
-          btn.childNodes[0].textContent = 'Read more ';
-          btn.querySelector('.toggle-arrow').innerHTML = '&darr;';
-          window.cardOpen = false;
-          panel.addEventListener('transitionend', function handler() {
-            if (!panel.classList.contains('is-open')) {
-              panel.setAttribute('hidden', '');
-            }
-            panel.removeEventListener('transitionend', handler);
+        function applyOpen(b, p) {
+          p.removeAttribute('hidden');
+          void p.offsetHeight;
+          p.classList.add('is-open');
+          b.setAttribute('aria-expanded', 'true');
+          b.childNodes[0].textContent = 'Read less ';
+          b.querySelector('.toggle-arrow').innerHTML = '&uarr;';
+        }
+
+        function applyClose(b, p) {
+          p.classList.remove('is-open');
+          b.setAttribute('aria-expanded', 'false');
+          b.childNodes[0].textContent = 'Read more ';
+          b.querySelector('.toggle-arrow').innerHTML = '&darr;';
+          p.addEventListener('transitionend', function handler() {
+            if (!p.classList.contains('is-open')) p.setAttribute('hidden', '');
+            p.removeEventListener('transitionend', handler);
           });
         }
-      });
-    });
 
-    // ─── CARD THUMB CLICK → OPEN READ MORE ───────────────────
-    document.querySelectorAll('.card-thumb').forEach(function(thumb) {
-      thumb.addEventListener('click', function() {
-        var btn = thumb.closest('.card').querySelector('.card-toggle');
-        if (btn) btn.click();
+        if (!expanded) {
+          applyOpen(btn, panel);
+          if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyOpen(tb, tb.nextElementSibling); }
+        } else {
+          applyClose(btn, panel);
+          if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyClose(tb, tb.nextElementSibling); }
+        }
+
+        window.cardOpen = Array.from(workCarousel.querySelectorAll('.card-toggle'))
+          .some(function(b) { return b.getAttribute('aria-expanded') === 'true'; });
       });
-    });
+    }
   </script>
 
   <script>
@@ -903,7 +941,7 @@
 
       function step() {
         if (!paused && !window.cardOpen) {
-          carousel.scrollLeft += 0.42;
+          carousel.scrollLeft += 0.21;
           if (carousel.scrollLeft >= halfWidth) {
             carousel.scrollLeft -= halfWidth;
           }

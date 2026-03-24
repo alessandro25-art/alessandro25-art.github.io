@@ -1,20 +1,22 @@
 {
   "project": "Portfolio",
   "branchName": "ralph/portfolio-fixes",
-  "description": "Click immagine apre Read more e pausa carousel",
+  "description": "Fix carousel cloni senza event listener + sync stato",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Click sull'immagine apre Read more e ferma il carousel",
-      "description": "As a visitor, clicking a card image should expand the Read more panel and pause the carousel, same as clicking the Read more button.",
+      "title": "Fix: cloni del carousel non rispondono ai click",
+      "description": "As a visitor, clicking on a cloned card should open Read more and pause the carousel, exactly like the originals.",
       "acceptanceCriteria": [
-        "Add a click event listener on each `.card-thumb` element",
-        "When `.card-thumb` is clicked, find the `.card-toggle` button inside the same `.card` and programmatically click it (btn.click())",
-        "Add `cursor: pointer` to `.card-thumb` CSS so the image looks clickable"
+        "Replace the per-element card-toggle listeners (document.querySelectorAll('.card-toggle').forEach) with event delegation on the carousel element itself",
+        "Replace the per-element card-thumb listeners with event delegation on the carousel element",
+        "When a card-toggle is clicked (open or close), also sync the twin card: find all cards in the carousel, get the clicked card's index, compute twinIndex = index < origCount ? index + origCount : index - origCount, and apply the same open/close state to the twin card silently (without re-triggering events)",
+        "window.cardOpen is set to true when ANY card opens, false only when ALL cards are closed (check if any card-toggle has aria-expanded=true after the action)",
+        "Remove the separate card-thumb click block — handle thumb clicks via delegation on carousel too"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "The card-toggle click handler already handles expand/collapse and sets cardOpen. Calling btn.click() reuses all that logic without duplication. The card-thumb listener should be added after the card-toggle listeners are set up."
+      "passes": false,
+      "notes": "Root cause: cloning (line ~918, script block 2) happens AFTER event listeners are attached (script block 1, lines 872-907). Delegation fixes this because the listener is on the carousel container which exists before cloning. origCount = 4 (the original 4 cards). The twin sync must update: hidden attr, is-open class, aria-expanded, button text and arrow — but NOT trigger click() to avoid infinite loop."
     }
   ]
 }
