@@ -17,6 +17,15 @@ Started: 2026-03-24
   - Simple single-property CSS change; no side effects on layout since cards are inside a flex carousel
 ---
 
+## US-002
+- Removed `scroll-snap-type: x mandatory` from `.work-carousel`
+- Added IIFE script before `</body>`: clones all `.card` elements, appends clones to carousel, runs RAF loop incrementing `scrollLeft` by 0.6/frame, resets when `>= halfWidth` for seamless loop, pauses on mouseenter/touchstart, resumes on mouseleave/touchend
+- Files changed: index.html
+- Learnings:
+  - `halfWidth` must be computed after cloning so it reflects the full doubled scrollWidth
+  - Removed scroll-snap to prevent snap fighting the programmatic scroll
+---
+
 ## Codebase Patterns
 - index.html is self-contained: all CSS in <style> block, all JS before </body>
 - Use Edit tool only — never Write the whole file (too large, too much context loss)

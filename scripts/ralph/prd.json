@@ -28,7 +28,7 @@
         "Pause on touchstart, resume on touchend"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Clone cards first so the second set is identical. Remove scroll-snap to avoid fighting with programmatic scroll. The JS block goes right before </body>, after existing scripts."
     }
   ]
