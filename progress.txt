@@ -22,3 +22,15 @@
 - Learnings:
   - Single numeric constant in the RAF step function controls speed
 ---
+
+## US-001 (Fix: cloni del carousel non rispondono ai click)
+- Replaced per-element `querySelectorAll('.card-toggle').forEach` and separate `.card-thumb` forEach with a single delegated listener on `.work-carousel`
+- Delegation handles both `.card-toggle` and `.card-thumb` clicks (thumb resolves to its card's toggle button)
+- On each toggle, computes twin card index (`origCount = allCards.length / 2`, twinIndex flips between first and second half) and silently syncs hidden/is-open/aria-expanded/text/arrow on the twin
+- `window.cardOpen` now computed from actual DOM state: `any .card-toggle[aria-expanded=true]` across all cards
+- Files changed: index.html
+- Learnings:
+  - Delegation must be on a container that exists before cloning — the carousel element is created in HTML, cloning happens in script block 2, so delegating on `.work-carousel` in script block 1 is safe
+  - `var tb` declared in both if/else branches is valid non-strict JS (hoisted once, only one branch executes)
+  - `window.cardOpen = false` in carousel IIFE (script block 2) only runs at page load, so it doesn't interfere with runtime delegation management
+---

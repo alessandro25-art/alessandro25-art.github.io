@@ -15,7 +15,7 @@
         "Remove the separate card-thumb click block — handle thumb clicks via delegation on carousel too"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Root cause: cloning (line ~918, script block 2) happens AFTER event listeners are attached (script block 1, lines 872-907). Delegation fixes this because the listener is on the carousel container which exists before cloning. origCount = 4 (the original 4 cards). The twin sync must update: hidden attr, is-open class, aria-expanded, button text and arrow — but NOT trigger click() to avoid infinite loop."
     }
   ]
