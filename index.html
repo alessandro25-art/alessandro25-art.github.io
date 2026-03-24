@@ -628,7 +628,7 @@
                   dropout rates and child labor in the short term, and improves lifetime
                   income in the long term, but the data on the latter is still thin.
                 </p>
-                <a class="card-pdf-link" href="./Lavori/outside in perspective_ILLY_Impact_Assessment.pdf" target="_blank">View full report &nearr;</a>
+                <a class="card-pdf-link" href="./Lavori/ILLY_Social_Impact_Assessment.pdf" download="ILLY_Social_Impact_Assessment.pdf" target="_blank">View full report &nearr;</a>
               </div>
             </div>
           </div>
@@ -663,7 +663,7 @@
                   75 by 2025, which gave us a concrete reference point for the
                   disability hiring initiative.
                 </p>
-                <a class="card-pdf-link" href="./Lavori/EY_Rigoni_Marketing.pdf" target="_blank">View full report &nearr;</a>
+                <a class="card-pdf-link" href="./Lavori/EY_Rigoni_ESG_Strategy.pdf" download="EY_Rigoni_ESG_Strategy.pdf" target="_blank">View full report &nearr;</a>
               </div>
             </div>
           </div>
@@ -698,7 +698,7 @@
                   interventions ranked by payback period; their CFO's strict
                   2.5-year cutoff was a real constraint we had to work around.
                 </p>
-                <a class="card-pdf-link" href="./Lavori/SustainableOperations (Demichelis, Hernandez, Cilla, Maldonado, Alimperti, Onghena).pdf" target="_blank">View full report &nearr;</a>
+                <a class="card-pdf-link" href="./Lavori/Ferri_Sustainable_Operations.pdf" download="Ferri_Sustainable_Operations.pdf" target="_blank">View full report &nearr;</a>
               </div>
             </div>
           </div>
@@ -733,7 +733,7 @@
                   The hardest challenge was making the sharing-economy pitch credible
                   for household users who default to owning a printer.
                 </p>
-                <a class="card-pdf-link" href="./Report on workshop results - Exam.docx" target="_blank">View full report &nearr;</a>
+                <a class="card-pdf-link" href="./Lavori/Exon_Circular_Business_Model.pdf" download="Exon_Circular_Business_Model.pdf" target="_blank">View full report &nearr;</a>
               </div>
             </div>
           </div>
@@ -869,7 +869,7 @@
       activeSkill = null;
     });
 
-    // ─── CARD EXPAND / COLLAPSE + THUMB (delegated on carousel) ─
+    // ─── CARD EXPAND / COLLAPSE + THUMB ─────────────────────────
     var workCarousel = document.querySelector('.work-carousel');
     if (workCarousel) {
       workCarousel.addEventListener('click', function(e) {
@@ -880,96 +880,35 @@
         }
         if (!btn) return;
 
-        var allCards = Array.from(workCarousel.querySelectorAll('.card'));
-        var origCount = allCards.length / 2;
         var card = btn.closest('.card');
-        var cardIndex = allCards.indexOf(card);
-        var twinIndex = cardIndex < origCount ? cardIndex + origCount : cardIndex - origCount;
-        var twinCard = allCards[twinIndex] || null;
-
         var expanded = btn.getAttribute('aria-expanded') === 'true';
         var panel = btn.nextElementSibling;
 
-        function applyOpen(b, p) {
-          p.removeAttribute('hidden');
-          void p.offsetHeight;
-          p.classList.add('is-open');
-          b.setAttribute('aria-expanded', 'true');
-          b.childNodes[0].textContent = 'Read less ';
-          b.querySelector('.toggle-arrow').innerHTML = '&uarr;';
-        }
-
-        function applyClose(b, p) {
-          p.classList.remove('is-open');
-          b.setAttribute('aria-expanded', 'false');
-          b.childNodes[0].textContent = 'Read more ';
-          b.querySelector('.toggle-arrow').innerHTML = '&darr;';
-          p.addEventListener('transitionend', function handler() {
-            if (!p.classList.contains('is-open')) p.setAttribute('hidden', '');
-            p.removeEventListener('transitionend', handler);
-          });
-        }
-
         if (!expanded) {
-          applyOpen(btn, panel);
-          if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyOpen(tb, tb.nextElementSibling); }
+          panel.removeAttribute('hidden');
+          void panel.offsetHeight;
+          panel.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.childNodes[0].textContent = 'Read less ';
+          btn.querySelector('.toggle-arrow').innerHTML = '&uarr;';
           setTimeout(function () {
-            var target = card.offsetLeft - workCarousel.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2);
+            var target = card.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2);
             workCarousel.scrollTo({ left: target, behavior: 'smooth' });
           }, 40);
         } else {
-          applyClose(btn, panel);
-          if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyClose(tb, tb.nextElementSibling); }
+          panel.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.childNodes[0].textContent = 'Read more ';
+          btn.querySelector('.toggle-arrow').innerHTML = '&darr;';
+          panel.addEventListener('transitionend', function handler() {
+            if (!panel.classList.contains('is-open')) panel.setAttribute('hidden', '');
+            panel.removeEventListener('transitionend', handler);
+          });
         }
-
-        window.cardOpen = Array.from(workCarousel.querySelectorAll('.card-toggle'))
-          .some(function(b) { return b.getAttribute('aria-expanded') === 'true'; });
       });
     }
   </script>
 
-  <script>
-    (function () {
-      var carousel = document.querySelector('.work-carousel');
-      if (!carousel) return;
-
-      // Clone all cards for seamless loop
-      var origCards = Array.from(carousel.querySelectorAll('.card'));
-      var beforeWidth = carousel.scrollWidth;
-      origCards.forEach(function (card) {
-        carousel.appendChild(card.cloneNode(true));
-      });
-      var loopWidth = carousel.scrollWidth - beforeWidth;
-      var paused = false;
-      window.cardOpen = false;
-      var rafId = null;
-
-      function step() {
-        if (!paused && !window.cardOpen) {
-          carousel.scrollLeft += 0.21;
-          if (carousel.scrollLeft >= loopWidth) {
-            carousel.scrollLeft -= loopWidth;
-          }
-        }
-        rafId = requestAnimationFrame(step);
-      }
-
-      setTimeout(function () {
-        carousel.scrollTo({ left: 100, behavior: 'smooth' });
-        setTimeout(function () {
-          carousel.scrollTo({ left: 0, behavior: 'smooth' });
-          setTimeout(function () {
-            rafId = requestAnimationFrame(step);
-          }, 700);
-        }, 600);
-      }, 700);
-
-      carousel.addEventListener('mouseenter', function () { paused = true; });
-      carousel.addEventListener('mouseleave', function () { paused = false; });
-      carousel.addEventListener('touchstart', function () { paused = true; }, { passive: true });
-      carousel.addEventListener('touchend', function () { paused = false; }, { passive: true });
-    })();
-  </script>
 
 </body>
 </html>
