@@ -13,6 +13,10 @@
     /* ─── RESET ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      overflow-x: hidden;
+    }
+
     html {
       font-size: 16px;
       scroll-behavior: smooth;
@@ -213,6 +217,7 @@
       scrollbar-width: none;
       margin-left: calc(50% - 50vw);
       width: 100vw;
+      padding-left: var(--space-md);
       padding-right: var(--space-md);
     }
     .work-carousel::-webkit-scrollbar { display: none; }
@@ -221,7 +226,7 @@
     .card {
       display: flex;
       flex-direction: column;
-      flex: 0 0 320px;
+      flex: 0 0 616px;
       scroll-snap-align: start;
     }
 
@@ -240,6 +245,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 20%;
       display: block;
     }
     .card:hover .card-thumb {
@@ -534,7 +540,7 @@
   <!-- NAV -->
   <nav class="site-nav">
     <span class="nav-name">Alessandro Demichelis</span>
-    <a class="nav-cv" href="./CV/CV_Alessandro_Demi.pdf" download>CV &darr;</a>
+    <a class="nav-cv" href="./CV/CV_Alessandro_Demichelis_26.pdf" download>CV &darr;</a>
   </nav>
 
   <main class="container">
@@ -733,7 +739,7 @@
         Technical intern on PNRR planning at the Comune di Reggio Calabria (2022).
         Fluent in Italian, English, and Spanish.
       </p>
-      <a class="btn-cv" href="./CV/CV_Alessandro_Demi.pdf" download>Download CV &darr;</a>
+      <a class="btn-cv" href="./CV/CV_Alessandro_Demichelis_26.pdf" download>Download CV &darr;</a>
     </section>
 
     <!-- QR -->

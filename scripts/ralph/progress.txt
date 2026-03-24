@@ -2,6 +2,14 @@
 Started: 2026-03-24
 ---
 
+## US-001
+- Added `position: relative` to `.card-thumb` rule
+- Updated `.card-thumb img` to use `position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block`
+- Files changed: index.html
+- Learnings:
+  - `height: 100%` on an img inside an aspect-ratio container is unreliable; `position: absolute; inset: 0` is the correct cross-browser fix
+---
+
 ## Codebase Patterns
 - index.html is self-contained: all CSS in <style> block, all JS before </body>
 - Use Edit tool only — never Write the whole file (too large, too much context loss)
