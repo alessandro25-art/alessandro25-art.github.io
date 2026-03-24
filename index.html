@@ -233,6 +233,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
+      cursor: pointer;
       border-radius: 3px;
       margin-bottom: var(--space-sm);
       transition: opacity var(--transition-fast);
@@ -872,6 +873,14 @@
             panel.removeEventListener('transitionend', handler);
           });
         }
+      });
+    });
+
+    // ─── CARD THUMB CLICK → OPEN READ MORE ───────────────────
+    document.querySelectorAll('.card-thumb').forEach(function(thumb) {
+      thumb.addEventListener('click', function() {
+        var btn = thumb.closest('.card').querySelector('.card-toggle');
+        if (btn) btn.click();
       });
     });
   </script>

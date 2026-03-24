@@ -1,21 +1,20 @@
 {
   "project": "Portfolio",
   "branchName": "ralph/portfolio-fixes",
-  "description": "Carousel pause on card expand",
+  "description": "Click immagine apre Read more e pausa carousel",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Pausa carousel quando si apre un Read more",
-      "description": "As a visitor, when I click Read more on a card the carousel should stop; when I click Read less it should resume.",
+      "title": "Click sull'immagine apre Read more e ferma il carousel",
+      "description": "As a visitor, clicking a card image should expand the Read more panel and pause the carousel, same as clicking the Read more button.",
       "acceptanceCriteria": [
-        "Declare a shared boolean `cardOpen = false` near the existing `paused` variable in the carousel JS block",
-        "In the RAF loop condition, stop scrolling if `paused || cardOpen` is true",
-        "In the card expand/collapse JS block, when opening (expanded === false): set `cardOpen = true`",
-        "When closing (expanded === true): set `cardOpen = false`"
+        "Add a click event listener on each `.card-thumb` element",
+        "When `.card-thumb` is clicked, find the `.card-toggle` button inside the same `.card` and programmatically click it (btn.click())",
+        "Add `cursor: pointer` to `.card-thumb` CSS so the image looks clickable"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "The carousel RAF JS and the card toggle JS are separate blocks in index.html. The `cardOpen` variable must be declared in the carousel block (before the RAF function) so both blocks can access it — or declare it at the top level outside both blocks. Use `var cardOpen = false` so it is function-scoped to the script tag."
+      "passes": false,
+      "notes": "The card-toggle click handler already handles expand/collapse and sets cardOpen. Calling btn.click() reuses all that logic without duplication. The card-thumb listener should be added after the card-toggle listeners are set up."
     }
   ]
 }
