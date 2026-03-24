@@ -1,0 +1,10 @@
+# Ralph Progress Log
+Started: 2026-03-24
+---
+
+## Codebase Patterns
+- index.html is self-contained: all CSS in <style> block, all JS before </body>
+- Use Edit tool only — never Write the whole file (too large, too much context loss)
+- No build step, no typecheck, no tests — quality check is manual code review of the changed block
+- git remote does not exist — local commits only
+---

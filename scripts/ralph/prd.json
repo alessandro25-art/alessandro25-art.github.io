@@ -1,0 +1,20 @@
+{
+  "project": "Portfolio",
+  "branchName": "ralph/portfolio-fixes",
+  "description": "Visual fixes for the portfolio page",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Fix card thumbnail images not filling their container",
+      "description": "As a visitor, I want card images to fully cover their thumbnail area so the portfolio looks polished.",
+      "acceptanceCriteria": [
+        "Add `position: relative` to `.card-thumb` CSS rule",
+        "Update `.card-thumb img` rule to use `position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block`",
+        "Images fill the full 4:3 area with no empty space or letterboxing"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "The current rule uses height:100% which is unreliable when parent height is derived from aspect-ratio. position:absolute + inset:0 is the correct cross-browser approach."
+    }
+  ]
+}
