@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alessandro Demichelis, Sustainability &amp; ESG Analyst">
+  <title>Alessandro Demichelis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --color-bg:          #FAFAFA;
+      --color-text:        #111111;
+      --color-text-muted:  #666666;
+      --color-label:       #999999;
+      --color-border:      #E8E8E8;
+      --color-tag-bg:      #F0F0F0;
+      --color-tag-text:    #444444;
+
+      --font-serif:        'Playfair Display', Georgia, serif;
+      --font-sans:         'DM Sans', system-ui, sans-serif;
+
+      --size-hero:         clamp(40px, 8vw, 64px);
+      --size-body:         0.9rem;
+      --size-label:        0.68rem;
+      --size-tag:          0.72rem;
+      --lh-body:           1.7;
+      --lh-tight:          1.3;
+      --tracking-label:    0.12em;
+
+      --max-width:         720px;
+      --padding-x:         24px;
+
+      --space-xs:   8px;
+      --space-sm:   16px;
+      --space-md:   32px;
+      --space-lg:   64px;
+      --space-xl:   96px;
+      --space-xxl:  128px;
+
+      --transition-fast:    0.2s ease;
+      --transition-reveal:  0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-expand:  0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── BASE ───────────────────────────────────────────── */
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: var(--lh-body);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(17,17,17,0.25);
+      text-underline-offset: 3px;
+      transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+    }
+    a:hover {
+      color: var(--color-text-muted);
+      text-decoration-color: rgba(17,17,17,0.1);
+    }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,250,250,0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px var(--padding-x);
+    }
+
+    .nav-name {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+
+    .nav-cv {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      padding: 5px 13px;
+      border-radius: 2px;
+      color: var(--color-text);
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    }
+    .nav-cv:hover {
+      background: var(--color-text);
+      color: #fff;
+      border-color: var(--color-text);
+    }
+
+    /* ─── CONTAINER ──────────────────────────────────────── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--padding-x);
+    }
+
+    /* ─── REVEAL ─────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity var(--transition-reveal), transform var(--transition-reveal);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── SECTION LABEL ──────────────────────────────────── */
+    .section-label {
+      font-size: var(--size-label);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-label);
+      color: var(--color-label);
+      margin-bottom: var(--space-lg);
+      display: block;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    .section-hero {
+      padding-top: var(--space-xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero-name {
+      font-family: var(--font-serif);
+      font-size: var(--size-hero);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-label);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-bio {
+      font-size: var(--size-body);
+      font-weight: 300;
+      line-height: var(--lh-body);
+      color: var(--color-text);
+      max-width: 520px;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      gap: 0;
+    }
+    .meta-sep {
+      margin: 0 10px;
+      opacity: 0.35;
+    }
+
+    /* ─── WORK ───────────────────────────────────────────── */
+    .section-work {
+      padding-top: var(--space-xxl);
+      padding-bottom: var(--space-xxl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .work-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: var(--space-md);
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-left: calc(50% - 50vw);
+      width: 100vw;
+      padding-right: var(--space-md);
+    }
+    .work-carousel::-webkit-scrollbar { display: none; }
+
+    /* ─── CARD ───────────────────────────────────────────── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 320px;
+      scroll-snap-align: start;
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 3px;
+      margin-bottom: var(--space-sm);
+      transition: opacity var(--transition-fast);
+      overflow: hidden;
+    }
+    .card-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card:hover .card-thumb {
+      opacity: 0.85;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .card-tags {
+      font-size: var(--size-tag);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+    }
+
+    .card-title {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: var(--lh-tight);
+      color: var(--color-text);
+    }
+
+    .card-short {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--color-text-muted);
+    }
+
+    .card-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: 4px;
+      font-family: var(--font-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+    .card-toggle:hover {
+      color: var(--color-text-muted);
+    }
+
+    .toggle-arrow {
+      display: inline-block;
+      transition: transform var(--transition-fast);
+      font-style: normal;
+    }
+
+    /* ─── CARD EXPANDED PANEL ────────────────────────────── */
+    .card-expanded {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height var(--transition-expand),
+        opacity var(--transition-expand);
+    }
+    .card-expanded.is-open {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    .card-expanded-inner {
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border);
+      margin-top: 6px;
+    }
+
+    .card-expanded-inner p {
+      font-size: 0.83rem;
+      font-weight: 300;
+      line-height: 1.72;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .card-pdf-link {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      margin-top: 4px;
+      transition: color var(--transition-fast);
+    }
+    .card-pdf-link:hover {
+      color: var(--color-text);
+    }
+
+    /* ─── SKILLS ─────────────────────────────────────────── */
+    .section-skills {
+      padding-top: var(--space-xxl);
+      padding-bottom: var(--space-xxl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .skill-badge {
+      display: inline-block;
+      font-size: var(--size-tag);
+      font-weight: 400;
+      color: var(--color-tag-text);
+      background: var(--color-tag-bg);
+      padding: 5px 11px;
+      border-radius: 2px;
+      letter-spacing: 0.03em;
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .skill-badge:hover {
+      background: #fff;
+      border-color: var(--color-border);
+    }
+
+    /* Skill detail panel */
+    .skill-badge[data-tip] { cursor: pointer; }
+    .skill-badge.tip-active {
+      background: #E4E4E4;
+      border-color: #D4D4D4;
+    }
+
+    .skill-detail {
+      flex-basis: 100%;
+      flex-shrink: 0;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      padding: 0 14px;
+      background: #E8E8E8;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #333;
+      line-height: 1.65;
+      transition:
+        max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.25s ease,
+        padding 0.25s ease,
+        border-color 0.25s ease;
+    }
+    .skill-detail.is-open {
+      max-height: 100px;
+      opacity: 1;
+      padding: 11px 14px;
+      border-color: #D8D8D8;
+    }
+
+    @keyframes badge-wave {
+      0%   { transform: translateY(0); }
+      40%  { transform: translateY(-4px); }
+      100% { transform: translateY(0); }
+    }
+    .skill-badge.waving {
+      animation: badge-wave 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ─── CV ─────────────────────────────────────────────── */
+    .section-cv {
+      padding-top: var(--space-xxl);
+      padding-bottom: var(--space-xxl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .cv-note {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+      line-height: var(--lh-body);
+      max-width: 480px;
+    }
+
+    .btn-cv {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--color-text);
+      color: #fff;
+      padding: 11px 24px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background var(--transition-fast);
+    }
+    .btn-cv:hover {
+      background: #333;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* ─── QR ─────────────────────────────────────────────── */
+    .section-qr {
+      padding-top: var(--space-xxl);
+      padding-bottom: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+
+    #qrcode {
+      width: 120px;
+      height: 120px;
+      border: 1px solid var(--color-border);
+      padding: 8px;
+      background: #fff;
+      border-radius: 3px;
+    }
+    #qrcode canvas,
+    #qrcode img {
+      display: block;
+      width: 104px !important;
+      height: 104px !important;
+    }
+
+    .qr-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--color-label);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-md) var(--padding-x);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: var(--color-label);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+    .footer-sep {
+      margin: 0 10px;
+      opacity: 0.35;
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .hero-name {
+        font-size: clamp(36px, 10vw, 56px);
+      }
+      .section-work,
+      .section-skills,
+      .section-cv,
+      .section-qr {
+        padding-top: var(--space-xl);
+        padding-bottom: var(--space-xl);
+      }
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .meta-sep { display: none; }
+      .section-qr { align-items: center; }
+      .qr-label { text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <span class="nav-name">Alessandro Demichelis</span>
+    <a class="nav-cv" href="./CV/CV_Alessandro_Demi.pdf" download>CV &darr;</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="section-hero reveal">
+      <h1 class="hero-name">Alessandro<br>Demichelis</h1>
+      <p class="hero-title">Sustainability &amp; ESG</p>
+      <p class="hero-bio">
+        Two masters in sustainability: one at POLIMI Graduate School of Management,
+        one at the University of Ferrara. I work on ESG analysis, sustainable operations,
+        and green finance. Some hands-on research and public sector experience along the way.
+      </p>
+      <div class="hero-meta">
+        <span>Milan, Italy</span>
+        <span class="meta-sep">&middot;</span>
+        <a href="mailto:Alessandro.demichelis@gsom.polimi.it">Alessandro.demichelis@gsom.polimi.it</a>
+        <span class="meta-sep">&middot;</span>
+        <span>IT &middot; EN &middot; ES</span>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section-work reveal">
+      <span class="section-label">Selected Work</span>
+
+      <div class="work-carousel">
+
+        <!-- CARD 1: ILLY -->
+        <article class="card">
+          <div class="card-thumb" style="background: #C17D52;">
+            <img src="https://images.pexels.com/photos/7125541/pexels-photo-7125541.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Coffee farmer collecting cherries" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div class="card-tags">Impact Assessment &middot; SDGs &middot; Supply Chain</div>
+            <h2 class="card-title">ILLY, Social Impact Assessment</h2>
+            <p class="card-short">
+              Measured the social impact of Illycaff&egrave;'s education program
+              in coffee-producing communities. Applied the Output&rarr;Outcome&rarr;Impact
+              framework across three SDGs.
+            </p>
+            <button class="card-toggle" aria-expanded="false">Read more <span class="toggle-arrow">&darr;</span></button>
+            <div class="card-expanded" hidden>
+              <div class="card-expanded-inner">
+                <p>
+                  Illycaff&egrave; has been a Benefit Corporation since 2019. The project
+                  assessed one of their flagship programs: after-school tutoring, vocational
+                  training, and scholarships for children in farming communities in
+                  developing markets. We mapped outputs, outcomes, and long-term impact
+                  against SDG 4 (Quality Education), SDG 8 (Decent Work), and SDG 10
+                  (Reduced Inequalities). The main finding was that the program reduces
+                  dropout rates and child labor in the short term, and improves lifetime
+                  income in the long term, but the data on the latter is still thin.
+                </p>
+                <a class="card-pdf-link" href="./Lavori/outside in perspective_ILLY_Impact_Assessment.pdf" target="_blank">View full report &nearr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2: EY x Rigoni -->
+        <article class="card">
+          <div class="card-thumb" style="background: #1B4332;">
+            <img src="https://images.pexels.com/photos/458796/pexels-photo-458796.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Organic food jars on shelf" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div class="card-tags">ESG Strategy &middot; Benchmarking &middot; People &amp; Planet</div>
+            <h2 class="card-title">EY &times; Rigoni di Asiago, ESG Strategy</h2>
+            <p class="card-short">
+              Designed two sustainability initiatives for Rigoni di Asiago with EY:
+              one on inclusive hiring, one on converting production waste into energy.
+            </p>
+            <button class="card-toggle" aria-expanded="false">Read more <span class="toggle-arrow">&darr;</span></button>
+            <div class="card-expanded" hidden>
+              <div class="card-expanded-inner">
+                <p>
+                  "Taste Beyond Limits" expands hiring of people with disabilities
+                  through NGO partnerships and workplace accessibility improvements.
+                  "From Waste to Energy" converts fruit processing residues into biogas,
+                  which feeds back into the production system as renewable energy and
+                  produces organic soil nutrients as a byproduct.
+                </p>
+                <p>
+                  We benchmarked both initiatives against Barilla, Ben &amp; Jerry's,
+                  Ferrero, and Carlsberg to understand where Rigoni could differentiate.
+                  Ferrero, for instance, has an Inclusion Index of 72/100 with a target of
+                  75 by 2025, which gave us a concrete reference point for the
+                  disability hiring initiative.
+                </p>
+                <a class="card-pdf-link" href="./Lavori/EY_Rigoni_Marketing.pdf" target="_blank">View full report &nearr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3: Ferri -->
+        <article class="card">
+          <div class="card-thumb" style="background: #3D5A80;">
+            <img src="https://images.pexels.com/photos/10406128/pexels-photo-10406128.jpeg?auto=compress&cs=tinysrgb&w=800" alt="CNC precision machining detail" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div class="card-tags">Operations &middot; Sustainability &middot; Manufacturing</div>
+            <h2 class="card-title">Ferri S.R.L, Sustainable Operations</h2>
+            <p class="card-short">
+              Consulting project for an Italian SME making ironing boards and ladders.
+              Looked at how they could cut costs and grow in Northern Europe
+              by treating sustainability as a competitiveness lever.
+            </p>
+            <button class="card-toggle" aria-expanded="false">Read more <span class="toggle-arrow">&darr;</span></button>
+            <div class="card-expanded" hidden>
+              <div class="card-expanded-inner">
+                <p>
+                  Ferri S.R.L has 47 employees and about &euro;23M in turnover. Family-owned,
+                  B2B, energy-intensive production. Under new leadership, the company wants
+                  to expand into Northern European markets where sustainability credentials
+                  matter more for procurement decisions.
+                </p>
+                <p>
+                  We analyzed three main barriers: corrective-only maintenance (no preventive
+                  system), high energy consumption with no optimization in place, and supply
+                  chain dependencies on aluminum and plastic. For each, we proposed
+                  interventions ranked by payback period; their CFO's strict
+                  2.5-year cutoff was a real constraint we had to work around.
+                </p>
+                <a class="card-pdf-link" href="./Lavori/SustainableOperations (Demichelis, Hernandez, Cilla, Maldonado, Alimperti, Onghena).pdf" target="_blank">View full report &nearr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4: Exon -->
+        <article class="card">
+          <div class="card-thumb" style="background: #4A4E69;">
+            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Business team collaborating on strategy" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div class="card-tags">Business Model &middot; Circular Economy &middot; Strategy</div>
+            <h2 class="card-title">Exon, Circular Business Model Design</h2>
+            <p class="card-short">
+              Group consulting project redesigning Exon&rsquo;s business model
+              from hardware sales to a circular, subscription-based printing ecosystem.
+            </p>
+            <button class="card-toggle" aria-expanded="false">Read more <span class="toggle-arrow">&darr;</span></button>
+            <div class="card-expanded" hidden>
+              <div class="card-expanded-inner">
+                <p>
+                  Exon makes printers and copiers for household and B2B customers.
+                  Facing declining demand and no end-of-life strategy, the company
+                  needed a structural rethink, not a marketing fix.
+                </p>
+                <p>
+                  We proposed five business model patterns: Razor-and-Blade
+                  (recurring revenue via ink and software subscriptions), Platform-as-a-Service
+                  (centralised digital hub for B2B fleet management), Experience Selling
+                  (creative printing hubs for B2C users), Freemium (basic free access,
+                  premium tiers), and Mass Customisation (photobooks, calendars on demand).
+                  The hardest challenge was making the sharing-economy pitch credible
+                  for household users who default to owning a printer.
+                </p>
+                <a class="card-pdf-link" href="./Report on workshop results - Exam.docx" target="_blank">View full report &nearr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section-skills reveal">
+      <span class="section-label">Skills</span>
+      <div class="skills-grid">
+        <span class="skill-badge" data-tip="EU framework classifying which economic activities count as sustainable. Applied in PNRR internship via the DNSH compliance principle.">EU Taxonomy</span>
+        <span class="skill-badge" data-tip="EU rules requiring financial firms to disclose sustainability risks. Covered in MSc Green Economy alongside EU Taxonomy and PNRR policy.">SFDR</span>
+        <span class="skill-badge" data-tip="The main global framework for corporate sustainability reporting. Covered in MSc coursework.">GRI Standards</span>
+        <span class="skill-badge" data-tip="Framework for reporting climate-related financial risks — physical and transition risks — to investors.">TCFD</span>
+        <span class="skill-badge" data-tip="Turning waste into value. Applied in the Rigoni project: fruit processing residues converted to biogas and organic soil nutrients.">Circular Economy</span>
+        <span class="skill-badge" data-tip="Output → Outcome → Impact. Applied in the ILLY project to measure social impact across SDG 4, 8, and 10.">Impact Assessment</span>
+        <span class="skill-badge" data-tip="Rating systems like MSCI ESG Ratings and Morningstar. Used during research internship for green portfolio analysis.">ESG Scoring</span>
+        <span class="skill-badge" data-tip="Analysed €40B+ in international green investment flows during research internship at University of Ferrara.">Green Finance</span>
+        <span class="skill-badge" data-tip="Tracing environmental and social impact through supply chains. Central to the ILLY project on Illycaffè's coffee communities.">Sustainable Supply Chain</span>
+        <span class="skill-badge" data-tip="Mapped stakeholders across 15+ countries in Europe and Asia during EV supply chain research at University of Ferrara.">Stakeholder Mapping</span>
+        <span class="skill-badge" data-tip="Quantitative models for EV market penetration tracking. Used during research internship at University of Ferrara.">R (RStudio)</span>
+        <span class="skill-badge" data-tip="Econometric analysis. Used in MSc coursework for green finance and environmental economics.">Stata</span>
+        <span class="skill-badge" data-tip="Financial models, ESG datasets, operations analysis. Used across all three consulting projects.">Excel</span>
+        <span class="skill-badge" data-tip="Slides for ILLY, Rigoni, and Ferri consulting presentations.">PowerPoint</span>
+      </div>
+      <div class="skill-detail" id="skill-detail"></div>
+    </section>
+
+    <!-- CV -->
+    <section class="section-cv reveal">
+      <span class="section-label">Curriculum Vitae</span>
+      <p class="cv-note">
+        Research intern in green energy markets (University of Ferrara, 2025).
+        Technical intern on PNRR planning at the Comune di Reggio Calabria (2022).
+        Fluent in Italian, English, and Spanish.
+      </p>
+      <a class="btn-cv" href="./CV/CV_Alessandro_Demi.pdf" download>Download CV &darr;</a>
+    </section>
+
+    <!-- QR -->
+    <section class="section-qr reveal">
+      <span class="section-label">Share this page</span>
+      <div id="qrcode"></div>
+      <p class="qr-label">Scan to open this page</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Alessandro Demichelis</span>
+    <span class="footer-sep">&middot;</span>
+    <span>2025</span>
+  </footer>
+
+  <!-- QR CODE LIBRARY -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // ─── QR CODE ─────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', function() {
+      new QRCode(document.getElementById('qrcode'), {
+        text: 'https://alessandrodemichelis.github.io',
+        width: 104,
+        height: 104,
+        colorDark: '#111111',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    });
+
+    // ─── SCROLL REVEAL ───────────────────────────────────────
+    (function() {
+      var revealEls = document.querySelectorAll('.reveal');
+
+      // Stagger cards
+      document.querySelectorAll('.card').forEach(function(card, i) {
+        card.style.transitionDelay = (i * 80) + 'ms';
+      });
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      revealEls.forEach(function(el) { observer.observe(el); });
+    })();
+
+    // ─── SKILL DETAIL PANEL ──────────────────────────────────
+    var skillDetail = document.getElementById('skill-detail');
+    var activeSkill = null;
+    var allBadges = Array.prototype.slice.call(document.querySelectorAll('.skill-badge[data-tip]'));
+
+    function waveFrom(clicked) {
+      var idx = allBadges.indexOf(clicked);
+      allBadges.forEach(function(b, i) {
+        var dist = Math.abs(i - idx);
+        b.style.animationDelay = (dist * 35) + 'ms';
+        b.classList.remove('waving');
+        void b.offsetWidth;
+        b.classList.add('waving');
+      });
+    }
+
+    function moveDetailAfterRow(badge) {
+      var rowTop = badge.offsetTop;
+      var sameRow = allBadges.filter(function(b) {
+        return Math.abs(b.offsetTop - rowTop) < 5;
+      });
+      var lastInRow = sameRow[sameRow.length - 1];
+      lastInRow.parentNode.insertBefore(skillDetail, lastInRow.nextSibling);
+    }
+
+    allBadges.forEach(function(badge) {
+      badge.addEventListener('click', function(e) {
+        if (activeSkill === badge) {
+          badge.classList.remove('tip-active');
+          skillDetail.classList.remove('is-open');
+          activeSkill = null;
+        } else {
+          allBadges.forEach(function(b) { b.classList.remove('tip-active'); });
+          badge.classList.add('tip-active');
+          moveDetailAfterRow(badge);
+          skillDetail.textContent = badge.getAttribute('data-tip');
+          skillDetail.classList.add('is-open');
+          activeSkill = badge;
+          waveFrom(badge);
+        }
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click', function() {
+      allBadges.forEach(function(b) { b.classList.remove('tip-active'); });
+      skillDetail.classList.remove('is-open');
+      activeSkill = null;
+    });
+
+    // ─── CARD EXPAND / COLLAPSE ──────────────────────────────
+    document.querySelectorAll('.card-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        var panel = btn.nextElementSibling;
+
+        if (!expanded) {
+          panel.removeAttribute('hidden');
+          void panel.offsetHeight; // force reflow
+          panel.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.childNodes[0].textContent = 'Read less ';
+          btn.querySelector('.toggle-arrow').innerHTML = '&uarr;';
+        } else {
+          panel.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.childNodes[0].textContent = 'Read more ';
+          btn.querySelector('.toggle-arrow').innerHTML = '&darr;';
+          panel.addEventListener('transitionend', function handler() {
+            if (!panel.classList.contains('is-open')) {
+              panel.setAttribute('hidden', '');
+            }
+            panel.removeEventListener('transitionend', handler);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
