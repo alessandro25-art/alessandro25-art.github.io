@@ -777,8 +777,10 @@
   <footer class="site-footer">
     <span>Alessandro Demichelis</span>
     <span class="footer-sep">&middot;</span>
-    <span>2025</span>
+    <span>2026</span>
   </footer>
+
+  <p style="text-align:center;font-size:0.6rem;color:#ccc;margin:0;padding:8px 0 16px;letter-spacing:0.04em;">Thank you for scrolling all the way here!</p>
 
   <!-- QR CODE LIBRARY -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -911,6 +913,9 @@
         if (!expanded) {
           applyOpen(btn, panel);
           if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyOpen(tb, tb.nextElementSibling); }
+          setTimeout(function () {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }, 40);
         } else {
           applyClose(btn, panel);
           if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyClose(tb, tb.nextElementSibling); }
