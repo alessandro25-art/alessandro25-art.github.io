@@ -13,7 +13,7 @@
         "Add `cursor: pointer` to `.card-thumb` CSS so the image looks clickable"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "The card-toggle click handler already handles expand/collapse and sets cardOpen. Calling btn.click() reuses all that logic without duplication. The card-thumb listener should be added after the card-toggle listeners are set up."
     }
   ]

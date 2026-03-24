@@ -7,6 +7,15 @@
   - Card toggle and carousel are in separate `<script>` blocks — local variables aren't shared; use `window.*` for cross-script state
 ---
 
+## US-001 (Click sull'immagine apre Read more e ferma il carousel)
+- Added `cursor: pointer` to `.card-thumb` CSS rule
+- Added click listeners on `.card-thumb` that call `btn.click()` on the sibling `.card-toggle`, reusing all expand/collapse and `window.cardOpen` logic
+- Files changed: index.html
+- Learnings:
+  - `thumb.closest('.card').querySelector('.card-toggle')` is the cleanest way to find the toggle from within the same card
+  - Delegating to `btn.click()` avoids duplicating the expand/pause logic
+---
+
 ## US-001 (Rallenta il carousel del 30%)
 - Changed carousel scroll speed from 0.6 to 0.42 (30% reduction)
 - Files changed: index.html
