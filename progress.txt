@@ -34,3 +34,12 @@
   - `var tb` declared in both if/else branches is valid non-strict JS (hoisted once, only one branch executes)
   - `window.cardOpen = false` in carousel IIFE (script block 2) only runs at page load, so it doesn't interfere with runtime delegation management
 ---
+
+## US-001 (Fix: infinite carousel loop stops at the end instead of looping)
+- Replaced `var halfWidth = carousel.scrollWidth / 2` with `origCards2[origCards2.length / 2].offsetLeft` to get the exact reset threshold
+- Updated the RAF step reset check to use `loopWidth` instead of `halfWidth`
+- Files changed: index.html
+- Learnings:
+  - `scrollWidth / 2` is inaccurate because scrollWidth includes padding on both ends; the first clone's `offsetLeft` is the exact pixel where the second set starts
+  - Must query cards AFTER cloning so `querySelectorAll('.card')` returns all cards (originals + clones); `length / 2` indexes the first clone
+---

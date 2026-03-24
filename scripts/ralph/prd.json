@@ -12,7 +12,7 @@
         "Remove the now-unused `halfWidth` variable"
       ],
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "notes": "Root cause: scrollWidth / 2 includes padding-right once and padding-left once, so halfWidth != one set width. The first clone's offsetLeft is the exact point where the second set starts, making it the correct reset threshold."
     },
     {

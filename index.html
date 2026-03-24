@@ -914,7 +914,8 @@
           applyOpen(btn, panel);
           if (twinCard) { var tb = twinCard.querySelector('.card-toggle'); applyOpen(tb, tb.nextElementSibling); }
           setTimeout(function () {
-            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            var target = card.offsetLeft - workCarousel.offsetLeft - (workCarousel.clientWidth / 2 - card.offsetWidth / 2);
+            workCarousel.scrollTo({ left: target, behavior: 'smooth' });
           }, 40);
         } else {
           applyClose(btn, panel);
